@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "name": "python-kit",
+  "rulesDir": ".claude/rules/python",
+  "rules": ["rules/python.md"],
+  "hooks": [
+    {
+      "id": "formatOnEdit",
+      "title": "Format on edit",
+      "summary": "Runs `ruff format` on every Python file Claude edits.",
+      "event": "PostToolUse",
+      "matcher": "Edit|MultiEdit|Write",
+      "script": "hooks/ruff-format-on-edit.sh"
+    },
+    {
+      "id": "lintOnEdit",
+      "title": "Lint on edit",
+      "summary": "Runs `ruff check` on every Python file Claude edits and reports violations to Claude.",
+      "event": "PostToolUse",
+      "matcher": "Edit|MultiEdit|Write",
+      "script": "hooks/ruff-check-on-edit.sh"
+    },
+    {
+      "id": "blockDangerousCommands",
+      "title": "Block dangerous commands",
+      "summary": "Refuses `rm -rf /`, `git push --force` and `git reset --hard` before they run.",
+      "event": "PreToolUse",
+      "matcher": "Bash",
+      "script": "hooks/block-dangerous-commands.sh"
+    }
+  ]
+}
